@@ -1,0 +1,15 @@
+{
+  "source": {
+    "include": [
+      "lib"
+    ]
+  },
+  "opts": {
+    "destination": "doc",
+    "recurse": true,
+    "package": "package.json",
+    "readme": "README.md",
+    "template": "./node_modules/ink-docstrap/template"
+  },
+  "plugins": ["plugins/markdown"]
+}
