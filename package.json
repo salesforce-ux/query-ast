@@ -21,7 +21,7 @@
     "chai": "3.5.0",
     "jsdoc": "^3.4.0",
     "mocha": "2.4.5",
-    "scss-parser": "1.0.0",
+    "scss-parser": "salesforce-ux/scss-parser",
     "standard": "^6.0.8"
   },
   "standard": {
