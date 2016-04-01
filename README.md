@@ -108,7 +108,7 @@ Not every AST follows the same format, so QueryAST also provides a way
 to traverse any tree structure. Below are the default options used to
 handle the above AST structure.
 
-```
+```javascript
 let options = {
   /**
    * Return true if the node has children
