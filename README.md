@@ -10,6 +10,13 @@ Read the [API documentation](https://salesforce-ux.github.io/query-ast)
 
 ## Usage
 
+```javascript
+let createQueryWrapper = require('query-ast')
+let $ = createQueryWrapper(ast, options)
+```
+
+## Getting Started
+
 QueryAST aims to provide a jQuery like API for traversing an AST.
 
 ```javascript
@@ -31,7 +38,7 @@ let ast = {
 }
 
 // Create a QueryWrapper that will be used to traverse/modify an AST
-let $ = require('query-ast')(ast)
+let $ = createQueryWrapper(ast)
 
 // Calling the QueryWrapper with no arguments traverses from the top level
 $().find('item').length() // 2
@@ -67,7 +74,7 @@ let ast = {
   }]
 }
 
-let $ = require('query-ast')(ast)
+let $ = createQueryWrapper(ast)
 
 // String
 $().find('item').length() // 2
@@ -147,8 +154,6 @@ let options = {
     return typeof node.value === 'string' ? node.value : ''
   }
 }
-
-let $ = require('query-ast')(ast, options)
 ```
 
 ## Running tests
