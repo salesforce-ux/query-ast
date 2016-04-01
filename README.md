@@ -13,12 +13,70 @@ Read the [API documentation](https://salesforce-ux.github.io/query-ast)
 QueryAST aims to provide a jQuery like API for traversing an AST.
 
 ```javascript
-// Create a function that will be used to traverse/modify an AST
-let $ = require('query-ast')(ast, options)
-// Make some modifications
-$().find('item').remove()
-// Return the modified AST
-$().get(0)
+let ast = {
+  type: 'program',
+  value: [{
+    type: 'item_container',
+    value: [{
+      type: 'item',
+      value: 'a'
+    }]
+  }, {
+    type: 'item_container',
+    value: []
+  }, {
+    type: 'item',
+    value: 'b'
+  }]
+}
+
+// Create a QueryWrapper that will be used to traverse/modify an AST
+let $ = require('query-ast')(ast)
+
+// Calling the QueryWrapper with no arguments traverses from the top level
+$().find('item').length() // 2
+
+// The QueryWrapper can also be scoped to a NodeWrapper or array of NodeWrappers
+$().find('item_container').filter((n) => {
+  return $(n).has('item')
+}).length() // 1
+```
+
+### Selectors
+
+Most of the traversal functions take an optional `QueryWrapper~Selector` argument that will
+be use to filter the results.
+
+A selector can be 1 of 3 types:
+- `string` that is compared against the return value of `options.getType()`
+- `regexp` that is compared against the return value of `options.getType()`
+- `function` that will be passed a `NodeWrapper` and expected to return a `boolean`
+
+```javascript
+let ast = {
+  type: 'program',
+  value: [{
+    type: 'item_container',
+    value: [{
+      type: 'item',
+      value: 'a'
+    }]
+  }, {
+    type: 'item',
+    value: 'b'
+  }]
+}
+
+let $ = require('query-ast')(ast)
+
+// String
+$().find('item').length() // 2
+
+// RegExp
+$().find(/item/).length() // 3
+
+// Function
+$().find((n) => n.node.value === 'a').length() // 1
 ```
 
 ### Default format
@@ -89,6 +147,8 @@ let options = {
     return typeof node.value === 'string' ? node.value : ''
   }
 }
+
+let $ = require('query-ast')(ast, options)
 ```
 
 ## Running tests
