@@ -8,7 +8,7 @@
     "test": "mocha lib/**/*.js test/**/*.js --reporter min --recursive --harmony_destructuring --harmony_rest_parameters",
     "lint": "standard",
     "build": "babel lib --out-dir dist --presets es2015",
-    "doc": "rm -rf doc && jsdoc -c jsdoc.json",
+    "doc": "jsdoc -c jsdoc.json && mv doc/query-ast/* doc/ && rm -rf doc/query-ast",
     "prepublish": "npm run build"
   },
   "dependencies": {

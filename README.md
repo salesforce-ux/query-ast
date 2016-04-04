@@ -6,7 +6,7 @@ A library to traverse/modify an AST
 
 ## Documentation
 
-Read the [API documentation](https://salesforce-ux.github.io/query-ast)
+Read the [API documentation](https://salesforce-ux.github.io/query-ast/doc/1.0.0)
 
 ## Usage
 
