@@ -41,10 +41,10 @@ let ast = {
 let $ = createQueryWrapper(ast)
 
 // Calling the QueryWrapper with no arguments traverses from the top level
-$().find('item').length() // 2
+$('item').length() // 2
 
 // The QueryWrapper can also be scoped to a NodeWrapper or array of NodeWrappers
-$().find('item_container').filter((n) => {
+$('item_container').filter((n) => {
   return $(n).has('item')
 }).length() // 1
 ```
@@ -77,13 +77,13 @@ let ast = {
 let $ = createQueryWrapper(ast)
 
 // String
-$().find('item').length() // 2
+$('item').length() // 2
 
 // RegExp
-$().find(/item/).length() // 3
+$(/item/).length() // 3
 
 // Function
-$().find((n) => n.node.value === 'a').length() // 1
+$((n) => n.node.value === 'a').length() // 1
 ```
 
 ### Default format
