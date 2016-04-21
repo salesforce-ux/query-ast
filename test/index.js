@@ -343,6 +343,38 @@ describe('$', () => {
       expect(rulesInterpolation.get(0)).to.deep.equal(rules.get(1))
     })
   })
+  describe('#hasParent', () => {
+    it('filters a selection to those that have a descendant that match the selector', () => {
+      let { $ } = getAST(`
+        .r { color: $_r; }
+        .g { color: #{$_g}; }
+        .b { color: $_b; }
+      `)
+      let variables = $()
+        .find('variable')
+      let variablesInterpolation = variables.hasParent('interpolation')
+      expect(variablesInterpolation.length()).to.equal(1)
+      expect(variablesInterpolation.get(0)).to.deep.equal(variables.get(1))
+    })
+  })
+  describe('#hasParents', () => {
+    it('filters a selection to those that have a descendant that match the selector', () => {
+      let { $ } = getAST(`
+        .r { color: $_r; }
+        .g { color: #{$_g}; }
+        .b { color: $_b; }
+      `)
+      let variables = $()
+        .find('variable')
+      let variablesInsideG = variables.hasParents((n) => {
+        return n.node.type === 'rule' && $(n).has((n) => {
+          return n.node.type === 'class' && $(n).value() === 'g'
+        }).length()
+      })
+      expect(variablesInsideG.length()).to.equal(1)
+      expect(variablesInsideG.get(0)).to.deep.equal(variables.get(1))
+    })
+  })
   describe('#last', () => {
     it('selects the last item in a selection', () => {
       let { $ } = getAST(`
