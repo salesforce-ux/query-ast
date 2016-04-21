@@ -80,9 +80,7 @@ describe('$', () => {
       let { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $()
-        .find('number')
-        .get()
+      let numbers = $('number').get()
       expect(Array.isArray(numbers)).to.be.true
       expect(numbers).to.have.length(3)
       expect(numbers.map(getValue)).to.deep.equal(['1', '2', '3'])
@@ -91,9 +89,7 @@ describe('$', () => {
       let { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $()
-        .find('number')
-        .get(1)
+      let numbers = $().find('number').get(1)
       expect(numbers.value).to.deep.equal('2')
     })
   })
@@ -102,7 +98,7 @@ describe('$', () => {
       let { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $().find('number')
+      let numbers = $('number')
       expect(numbers.length()).to.equal(3)
     })
   })
@@ -113,8 +109,7 @@ describe('$', () => {
         .g { color: #{$_g}; }
         .b { color: $_b; }
       `)
-      let index = $()
-        .find('rule')
+      let index = $('rule')
         .eq(1)
         .index()
       // This is matching against siblings (whitespace included)
@@ -137,8 +132,8 @@ describe('$', () => {
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      $()
-        .find('rule').eq(1)
+      $('rule')
+        .eq(1)
         .after(
           createAST('.z { color: $_z; }').value[0]
         )
@@ -152,8 +147,8 @@ describe('$', () => {
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      $()
-        .find('rule').eq(0)
+      $('rule')
+        .eq(0)
         .before(
           createAST('.z { color: $_z; }').value[0]
         )
@@ -167,9 +162,9 @@ describe('$', () => {
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let rulesBefore = $().find('rule').get()
-      $().find('rule').eq(1).remove()
-      let rulesAfter = $().find('rule').get()
+      let rulesBefore = $('rule').get()
+      $('rule').eq(1).remove()
+      let rulesAfter = $('rule').get()
       expect(rulesAfter).to.deep.equal([rulesBefore[0], rulesBefore[2]])
     })
   })
@@ -178,7 +173,7 @@ describe('$', () => {
       let { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $().find('number').map((n) => {
+      let numbers = $('number').map((n) => {
         return $(n).value()
       })
       expect(numbers).to.deep.equal(['1', '2', '3'])
@@ -189,7 +184,7 @@ describe('$', () => {
       let { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $().find('number').reduce((acc, n) => {
+      let numbers = $('number').reduce((acc, n) => {
         return acc + $(n).value()
       }, '')
       expect(numbers).to.deep.equal('123')
@@ -200,7 +195,7 @@ describe('$', () => {
       let { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      $().find('number').first().replace((n) => {
+      $('number').first().replace((n) => {
         return { type: 'number', value: '8' }
       })
       expect($().find('number').first().value()).to.equal('8')
