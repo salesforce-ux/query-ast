@@ -16,16 +16,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 const { expect } = require('chai')
 
 const createQuery = require('../lib')
-const { createAST } = require('../../scss-parser/test/helpers')
+const { getAST } = require('./helpers')
 
 let getType = (n) => n.type
 let getValue = (n) => n.value
-
-let getAST = (scss) => {
-  let ast = createAST(scss)
-  let $ = createQuery(ast)
-  return { ast, $ }
-}
 
 describe('#createQuery(ast, options)', () => {
   describe('ast', () => {
@@ -135,7 +129,7 @@ describe('$', () => {
       $('rule')
         .eq(1)
         .after(
-          createAST('.z { color: $_z; }').value[0]
+          getAST('.z { color: $_z; }').ast.value[0]
         )
       expect($().find('class').value()).to.equal('rgzb')
     })
@@ -150,7 +144,7 @@ describe('$', () => {
       $('rule')
         .eq(0)
         .before(
-          createAST('.z { color: $_z; }').value[0]
+          getAST('.z { color: $_z; }').ast.value[0]
         )
       expect($().find('class').value()).to.equal('zrgb')
     })
@@ -188,6 +182,16 @@ describe('$', () => {
         return acc + $(n).value()
       }, '')
       expect(numbers).to.deep.equal('123')
+    })
+  })
+  describe('#concat', () => {
+    it('works', () => {
+      let { $ } = getAST(`
+        $border: 1px 2px 3px;
+      `)
+      let numbersA = $('number').eq(0)
+      let numbersB = $('number').eq(1)
+      expect(numbersA.concat(numbersB).value()).to.deep.equal('12')
     })
   })
   describe('#replace', () => {
