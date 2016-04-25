@@ -1,1 +1,6 @@
 test/
+doc/
+*.log
+.travis.yml
+jsdoc.json
+CONTRIBUTING.md
