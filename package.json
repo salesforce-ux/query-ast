@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A library to traverse/modify an AST",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:salesforce-ux/query-ast.git"
+  },
   "scripts": {
     "start": "node --harmony_destructuring --harmony_rest_parameters lib/index.js",
     "test": "mocha lib/**/*.js test/**/*.js --reporter min --recursive --harmony_destructuring --harmony_rest_parameters",
