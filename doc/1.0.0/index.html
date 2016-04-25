@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NodeWrapper.html">NodeWrapper</a><ul class='methods'><li data-type='method'><a href="NodeWrapper.html#.create">create</a></li><li data-type='method'><a href="NodeWrapper.html#.isNodeWrapper">isNodeWrapper</a></li><li data-type='method'><a href="NodeWrapper.html#reduce">reduce</a></li><li data-type='method'><a href="NodeWrapper.html#toJSON">toJSON</a></li></ul></li><li><a href="QueryWrapper.html">QueryWrapper</a><ul class='methods'><li data-type='method'><a href="QueryWrapper.html#after">after</a></li><li data-type='method'><a href="QueryWrapper.html#before">before</a></li><li data-type='method'><a href="QueryWrapper.html#children">children</a></li><li data-type='method'><a href="QueryWrapper.html#closest">closest</a></li><li data-type='method'><a href="QueryWrapper.html#concat">concat</a></li><li data-type='method'><a href="QueryWrapper.html#eq">eq</a></li><li data-type='method'><a href="QueryWrapper.html#filter">filter</a></li><li data-type='method'><a href="QueryWrapper.html#find">find</a></li><li data-type='method'><a href="QueryWrapper.html#first">first</a></li><li data-type='method'><a href="QueryWrapper.html#get">get</a></li><li data-type='method'><a href="QueryWrapper.html#has">has</a></li><li data-type='method'><a href="QueryWrapper.html#hasParent">hasParent</a></li><li data-type='method'><a href="QueryWrapper.html#hasParents">hasParents</a></li><li data-type='method'><a href="QueryWrapper.html#index">index</a></li><li data-type='method'><a href="QueryWrapper.html#last">last</a></li><li data-type='method'><a href="QueryWrapper.html#length">length</a></li><li data-type='method'><a href="QueryWrapper.html#map">map</a></li><li data-type='method'><a href="QueryWrapper.html#next">next</a></li><li data-type='method'><a href="QueryWrapper.html#nextAll">nextAll</a></li><li data-type='method'><a href="QueryWrapper.html#parent">parent</a></li><li data-type='method'><a href="QueryWrapper.html#parents">parents</a></li><li data-type='method'><a href="QueryWrapper.html#parentsUntil">parentsUntil</a></li><li data-type='method'><a href="QueryWrapper.html#prev">prev</a></li><li data-type='method'><a href="QueryWrapper.html#prevAll">prevAll</a></li><li data-type='method'><a href="QueryWrapper.html#reduce">reduce</a></li><li data-type='method'><a href="QueryWrapper.html#remove">remove</a></li><li data-type='method'><a href="QueryWrapper.html#replace">replace</a></li><li data-type='method'><a href="QueryWrapper.html#value">value</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="QueryWrapperOptions.html">QueryWrapperOptions</a><ul class='methods'><li data-type='method'><a href="QueryWrapperOptions.html#getChildren">getChildren</a></li><li data-type='method'><a href="QueryWrapperOptions.html#getType">getType</a></li><li data-type='method'><a href="QueryWrapperOptions.html#hasChildren">hasChildren</a></li><li data-type='method'><a href="QueryWrapperOptions.html#toJSON">toJSON</a></li><li data-type='method'><a href="QueryWrapperOptions.html#toString">toString</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createQueryWrapper">createQueryWrapper</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>QueryAST</h1><p><a href="https://travis-ci.org/salesforce-ux/query-ast"><img src="https://travis-ci.org/salesforce-ux/query-ast.svg?branch=master" alt="Build Status"></a>
+<a href="https://npmjs.org/package/query-ast"><img src="http://img.shields.io/npm/v/query-ast.svg" alt="NPM version"></a></p>
+<p>A library to traverse/modify an AST</p>
+<h2>Documentation</h2><p>Read the <a href="https://salesforce-ux.github.io/query-ast/doc/1.0.0">API documentation</a></p>
+<h2>Usage</h2><pre class="prettyprint source lang-javascript"><code>let createQueryWrapper = require('query-ast')
+let $ = createQueryWrapper(ast, options)</code></pre><h2>Getting Started</h2><p>QueryAST aims to provide a jQuery like API for traversing an AST.</p>
+<pre class="prettyprint source lang-javascript"><code>let ast = {
+  type: 'program',
+  value: [{
+    type: 'item_container',
+    value: [{
+      type: 'item',
+      value: 'a'
+    }]
+  }, {
+    type: 'item_container',
+    value: []
+  }, {
+    type: 'item',
+    value: 'b'
+  }]
+}
+
+// Create a QueryWrapper that will be used to traverse/modify an AST
+let $ = createQueryWrapper(ast)
+
+// Calling the QueryWrapper with no arguments traverses from the top level
+$('item').length() // 2
+
+// The QueryWrapper can also be scoped to a NodeWrapper or array of NodeWrappers
+$('item_container').filter((n) => {
+  return $(n).has('item')
+}).length() // 1</code></pre><h3>Selectors</h3><p>Most of the traversal functions take an optional <code>QueryWrapper~Selector</code> argument that will
+be use to filter the results.</p>
+<p>A selector can be 1 of 3 types:</p>
+<ul>
+<li><code>string</code> that is compared against the return value of <code>options.getType()</code></li>
+<li><code>regexp</code> that is compared against the return value of <code>options.getType()</code></li>
+<li><code>function</code> that will be passed a <code>NodeWrapper</code> and expected to return a <code>boolean</code></li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>let ast = {
+  type: 'program',
+  value: [{
+    type: 'item_container',
+    value: [{
+      type: 'item',
+      value: 'a'
+    }]
+  }, {
+    type: 'item',
+    value: 'b'
+  }]
+}
+
+let $ = createQueryWrapper(ast)
+
+// String
+$('item').length() // 2
+
+// RegExp
+$(/item/).length() // 3
+
+// Function
+$((n) => n.node.value === 'a').length() // 1</code></pre><h3>Default format</h3><p>By default, QueryAST assumes that an AST will be formatted as a node tree
+where each node has a <code>type</code> key and a <code>value</code> key that either contains the
+string value of the node or an array of child nodes.</p>
+<pre class="prettyprint source lang-javascript"><code>let ast = {
+  type: 'program',
+  value: [{
+    type: 'item',
+    value: 'a'
+  }]
+}</code></pre><h2>Alternate formats</h2><p>Not every AST follows the same format, so QueryAST also provides a way
+to traverse any tree structure. Below are the default options used to
+handle the above AST structure.</p>
+<pre class="prettyprint source lang-javascript"><code>let options = {
+  /**
+   * Return true if the node has children
+   *
+   * @param {object} node
+   * @returns {boolean}
+   */
+  hasChildren: (node) => Array.isArray(node.value),
+  /**
+   * Return an array of child nodes
+   *
+   * @param {object} node
+   * @returns {object[]}
+   */
+  getChildren: (node) => node.value,
+  /**
+   * Return a string representation of the node's type
+   *
+   * @param {object} node
+   * @returns {string}
+   */
+  getType: (node) => node.type,
+  /**
+   * Convert the node back to JSON. This usually just means merging the
+   * children back into the node
+   *
+   * @param {object} node
+   * @param {object[]} [children]
+   * @returns {string}
+   */
+  toJSON: (node, children) => {
+    return Object.assign({}, node, {
+      value: children ? children : node.value
+    })
+  },
+  /**
+   * Convert the node to a string
+   *
+   * @param {object} node
+   * @returns {string}
+   */
+  toString: (node) => {
+    return typeof node.value === 'string' ? node.value : ''
+  }
+}</code></pre><h2>Running tests</h2><p>Clone the repository, then:</p>
+<pre class="prettyprint source lang-bash"><code>npm install
+# requires node >= 5.0.0
+npm test</code></pre><h2>Generate Documentation</h2><pre class="prettyprint source lang-bash"><code>npm run doc</code></pre><h2>License</h2><p>Copyright (c) 2016, salesforce.com, inc. All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the name of salesforce.com, inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</p>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Apr 25 2016 09:35:54 GMT-0400 (EDT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

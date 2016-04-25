@@ -1,0 +1,33 @@
+{
+  "name": "query-ast",
+  "version": "1.0.0",
+  "description": "A library to traverse/modify an AST",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node --harmony_destructuring --harmony_rest_parameters lib/index.js",
+    "test": "mocha lib/**/*.js test/**/*.js --reporter min --recursive --harmony_destructuring --harmony_rest_parameters",
+    "lint": "standard",
+    "build": "babel lib --out-dir dist --presets es2015",
+    "doc": "jsdoc -c jsdoc.json && mv doc/query-ast/* doc/ && rm -rf doc/query-ast",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "invariant": "^2.2.1",
+    "lodash": "^4.6.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-es2015": "^6.6.0",
+    "chai": "3.5.0",
+    "jsdoc": "^3.4.0",
+    "minami": "^1.1.1",
+    "mocha": "2.4.5",
+    "scss-parser": "1.0.0",
+    "standard": "^6.0.8"
+  },
+  "standard": {
+    "ignore": [
+      "node_modules/**/*"
+    ]
+  }
+}
