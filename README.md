@@ -41,7 +41,7 @@ let ast = {
 // Create a QueryWrapper that will be used to traverse/modify an AST
 let $ = createQueryWrapper(ast)
 
-// Calling the QueryWrapper with no arguments traverses from the top level
+// By default, the QueryWrapper is scoped to the root node
 $('item').length() // 2
 
 // The QueryWrapper can also be scoped to a NodeWrapper or array of NodeWrappers
