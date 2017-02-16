@@ -2,6 +2,7 @@
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
+[![Greenkeeper badge](https://badges.greenkeeper.io/salesforce-ux/query-ast.svg)](https://greenkeeper.io/)
 
 A library to traverse/modify an AST
 
