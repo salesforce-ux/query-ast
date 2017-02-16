@@ -164,7 +164,7 @@ Clone the repository, then:
 
 ```bash
 npm install
-# requires node >= 5.0.0
+# requires node >= 6.0.0
 npm test
 ```
 
