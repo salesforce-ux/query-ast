@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A library to traverse/modify an AST",
   "main": "dist/index.js",
-  "license": "BSD-Clause-3",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git@github.com:salesforce-ux/query-ast.git"
