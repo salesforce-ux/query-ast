@@ -8,6 +8,10 @@
     "type": "git",
     "url": "git@github.com:salesforce-ux/query-ast.git"
   },
+  "bugs": {
+    "url": "https://github.com/salesforce-ux/query-ast/issues"
+  },
+  "homepage": "https://github.com/salesforce-ux/query-ast",
   "scripts": {
     "start": "node --harmony_destructuring --harmony_rest_parameters lib/index.js",
     "test": "mocha lib/**/*.js test/**/*.js --reporter min --recursive --harmony_destructuring --harmony_rest_parameters",
