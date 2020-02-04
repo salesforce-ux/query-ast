@@ -1,4 +1,8 @@
-# QueryAST [![Build Status][travis-image]][travis-url] [![NPM version][npm-image]][npm-url] [![Greenkeeper badge](https://badges.greenkeeper.io/salesforce-ux/query-ast.svg)](https://greenkeeper.io/)
+# QueryAST
+
+[![Build Status][travis-image]][travis-url]
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=salesforce-ux/query-ast)](https://dependabot.com)
+[![NPM version][npm-image]][npm-url]
 
 A library to traverse/modify an AST
 
