@@ -10,8 +10,8 @@ const { expect } = require('chai')
 const createQuery = require('../lib')
 const { getAST } = require('./helpers')
 
-let getType = (n) => n.type
-let getValue = (n) => n.value
+const getType = (n) => n.type
+const getValue = (n) => n.value
 
 describe('#createQuery(ast, options)', () => {
   describe('ast', () => {
@@ -63,57 +63,57 @@ describe('#createQuery(ast, options)', () => {
 describe('$', () => {
   describe('#get', () => {
     it('returns the the nodes as JSON', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $('number').get()
-      expect(Array.isArray(numbers)).to.be.true
+      const numbers = $('number').get()
+      expect(Array.isArray(numbers)).to.be.true // eslint-disable-line
       expect(numbers).to.have.length(3)
       expect(numbers.map(getValue)).to.deep.equal(['1', '2', '3'])
     })
     it('returns a single node as JSON', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $().find('number').get(1)
+      const numbers = $().find('number').get(1)
       expect(numbers.value).to.deep.equal('2')
     })
   })
   describe('#length', () => {
     it('returns length of the current selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $('number')
+      const numbers = $('number')
       expect(numbers.length()).to.equal(3)
     })
   })
   describe('#index', () => {
     it('returns the index of the first item in the selection based on its siblings', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: #{$_g}; }
         .b { color: $_b; }
       `)
-      let index = $('rule')
+      const index = $('rule')
         .eq(1)
         .index()
       // This is matching against siblings (whitespace included)
       expect(index).to.equal(3)
     })
     it('returns the index of the first item in the selection that matches the selector', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $background: #fff #ccc #000;
       `)
-      let $node = $()
-      let $gray = $node.find('value').first().children().eq(3)
-      let index = $gray.index('color_hex')
+      const $node = $()
+      const $gray = $node.find('value').first().children().eq(3)
+      const index = $gray.index('color_hex')
       expect(index).to.equal(1)
     })
   })
   describe('#after', () => {
     it('inserts a node after', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
@@ -128,7 +128,7 @@ describe('$', () => {
   })
   describe('#before', () => {
     it('inserts a node after', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
@@ -143,23 +143,23 @@ describe('$', () => {
   })
   describe('#remove', () => {
     it('removes a node', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let rulesBefore = $('rule').get()
+      const rulesBefore = $('rule').get()
       $('rule').eq(1).remove()
-      let rulesAfter = $('rule').get()
+      const rulesAfter = $('rule').get()
       expect(rulesAfter).to.deep.equal([rulesBefore[0], rulesBefore[2]])
     })
   })
   describe('#map', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $('number').map((n) => {
+      const numbers = $('number').map((n) => {
         return $(n).value()
       })
       expect(numbers).to.deep.equal(['1', '2', '3'])
@@ -167,10 +167,10 @@ describe('$', () => {
   })
   describe('#reduce', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbers = $('number').reduce((acc, n) => {
+      const numbers = $('number').reduce((acc, n) => {
         return acc + $(n).value()
       }, '')
       expect(numbers).to.deep.equal('123')
@@ -178,17 +178,17 @@ describe('$', () => {
   })
   describe('#concat', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let numbersA = $('number').eq(0)
-      let numbersB = $('number').eq(1)
+      const numbersA = $('number').eq(0)
+      const numbersB = $('number').eq(1)
       expect(numbersA.concat(numbersB).value()).to.deep.equal('12')
     })
   })
   describe('#replace', () => {
     it('removes a node', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
       $('number').first().replace((n) => {
@@ -199,30 +199,30 @@ describe('$', () => {
   })
   describe('#children', () => {
     it('returns direct children of a node', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $border: 1px 2px 3px;
       `)
-      let children = $()
+      const children = $()
         .find('value')
         .children()
       expect(children.length()).to.equal(9)
     })
     it('returns direct children of multiple nodes', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $borderA: 1px 2px 3px;
         $borderB: 4px 5px 6px;
       `)
-      let children = $()
+      const children = $()
         .find('value')
         .children()
       expect(children.length()).to.equal(18)
     })
     it('returns direct children of multiple nodes filterd by a selector', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $borderA: 1px 2px 3px;
         $borderB: 4px 5px 6px;
       `)
-      let children = $()
+      const children = $()
         .find('value')
         .children('number')
       expect(children.length()).to.equal(6)
@@ -230,25 +230,25 @@ describe('$', () => {
   })
   describe('#closest', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
       `)
-      let blocks = $()
+      const blocks = $()
         .find('variable')
         .closest('block')
         .get()
-      let block = $().find('block').get(0)
+      const block = $().find('block').get(0)
       expect(blocks).to.deep.equal([block])
     })
   })
   describe('#eq', () => {
     it('selects the node at the specified index', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let className = $()
+      const className = $()
         .find('rule')
         .eq(1)
         .find('class')
@@ -258,21 +258,21 @@ describe('$', () => {
   })
   describe('#find', () => {
     it('selects all nodes matching a type', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
       `)
-      let variables = $()
+      const variables = $()
         .find('variable')
         .get()
       expect(variables.map(getValue)).to.deep.equal(['_r'])
     })
     it('selects based on the previous selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         $hello: world;
         .b { color: $_b; }
         .g { color: $_g; }
       `)
-      let variables = $()
+      const variables = $()
         .find('rule')
         .find('variable')
         .get()
@@ -281,24 +281,24 @@ describe('$', () => {
   })
   describe('#filter', () => {
     it('filters a selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let className = $()
+      const className = $()
         .find('class')
         .filter((n) => $(n).value() === 'g')
         .value()
       expect(className).to.equal('g')
     })
     it('filters a selection inverse', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let notSpaces = $()
+      const notSpaces = $()
         .children()
         .filter((n) => n.node.type !== 'space')
       expect(notSpaces.length()).to.equal(3)
@@ -306,12 +306,12 @@ describe('$', () => {
   })
   describe('#first', () => {
     it('selects the first item in a selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let actual = $()
+      const actual = $()
         .find('class')
         .first()
       expect(actual.get()).to.have.length(1)
@@ -320,14 +320,14 @@ describe('$', () => {
   })
   describe('#has', () => {
     it('filters a selection to those that have a descendant that match the selector', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: #{$_g}; }
         .b { color: $_b; }
       `)
-      let rules = $()
+      const rules = $()
         .find('rule')
-      let rulesInterpolation = $()
+      const rulesInterpolation = $()
         .find('rule')
         .has('interpolation')
       expect(rulesInterpolation.length()).to.equal(1)
@@ -336,28 +336,28 @@ describe('$', () => {
   })
   describe('#hasParent', () => {
     it('filters a selection to those that have a descendant that match the selector', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: #{$_g}; }
         .b { color: $_b; }
       `)
-      let variables = $()
+      const variables = $()
         .find('variable')
-      let variablesInterpolation = variables.hasParent('interpolation')
+      const variablesInterpolation = variables.hasParent('interpolation')
       expect(variablesInterpolation.length()).to.equal(1)
       expect(variablesInterpolation.get(0)).to.deep.equal(variables.get(1))
     })
   })
   describe('#hasParents', () => {
     it('filters a selection to those that have a descendant that match the selector', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: #{$_g}; }
         .b { color: $_b; }
       `)
-      let variables = $()
+      const variables = $()
         .find('variable')
-      let variablesInsideG = variables.hasParents((n) => {
+      const variablesInsideG = variables.hasParents((n) => {
         return n.node.type === 'rule' && $(n).has((n) => {
           return n.node.type === 'class' && $(n).value() === 'g'
         }).length()
@@ -368,12 +368,12 @@ describe('$', () => {
   })
   describe('#last', () => {
     it('selects the last item in a selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let classes = $()
+      const classes = $()
         .find('class')
         .last()
       expect(classes.get()).to.have.length(1)
@@ -382,12 +382,12 @@ describe('$', () => {
   })
   describe('#next', () => {
     it('selects the next sibling for each item in the selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let node = $()
+      const node = $()
         .find('rule')
         .eq(1) // .g
         .next() // space
@@ -395,12 +395,12 @@ describe('$', () => {
       expect(node.find('class').value()).to.equal('b')
     })
     it('optionally filters selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let node = $()
+      const node = $()
         .find('rule')
         .eq(1)
         .next('rule')
@@ -410,12 +410,12 @@ describe('$', () => {
   })
   describe('#nextAll', () => {
     it('selects the next sibling for each item in the selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let nodes = $()
+      const nodes = $()
         .find('rule')
         .eq(1)
         .nextAll()
@@ -423,12 +423,12 @@ describe('$', () => {
       expect(nodes.map(getType)).to.deep.equal(['space', 'rule', 'space'])
     })
     it('optionally filters selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let nodes = $()
+      const nodes = $()
         .find('rule')
         .eq(0)
         .nextAll('rule')
@@ -438,13 +438,13 @@ describe('$', () => {
   })
   describe('#parent', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         @mixin myMixin ($a) {}
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let parents = $()
+      const parents = $()
         .find('variable')
         .parent()
         .get()
@@ -453,13 +453,13 @@ describe('$', () => {
       ])
     })
     it('optionally filters selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         @mixin myMixin ($a) {}
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let parents = $()
+      const parents = $()
         .find('variable')
         .parent('arguments')
         .get()
@@ -468,10 +468,10 @@ describe('$', () => {
   })
   describe('#parents', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
       `)
-      let parents = $()
+      const parents = $()
         .find('variable')
         .parents()
         .get()
@@ -480,10 +480,10 @@ describe('$', () => {
       ])
     })
     it('optionally filters selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
       `)
-      let parents = $()
+      const parents = $()
         .find('variable')
         .parents('rule')
         .get()
@@ -492,10 +492,10 @@ describe('$', () => {
   })
   describe('#parentsUntil', () => {
     it('works', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
       `)
-      let parents = $()
+      const parents = $()
         .find('variable')
         .parentsUntil('rule')
         .get()
@@ -506,12 +506,12 @@ describe('$', () => {
   })
   describe('#prev', () => {
     it('selects the previous sibling for each item in the selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let node = $()
+      const node = $()
         .find('rule')
         .eq(1) // .g
         .prev() // space
@@ -519,12 +519,12 @@ describe('$', () => {
       expect(node.find('class').value()).to.equal('r')
     })
     it('optionally filters selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let node = $()
+      const node = $()
         .find('rule')
         .eq(1)
         .prev('rule')
@@ -534,12 +534,12 @@ describe('$', () => {
   })
   describe('#prevAll', () => {
     it('selects the previous sibling for each item in the selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let nodes = $()
+      const nodes = $()
         .find('rule')
         .eq(1)
         .prevAll()
@@ -547,12 +547,12 @@ describe('$', () => {
       expect(nodes.map(getType)).to.deep.equal(['space', 'rule', 'space'])
     })
     it('optionally filters selection', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { color: $_r; }
         .g { color: $_g; }
         .b { color: $_b; }
       `)
-      let classNames = $()
+      const classNames = $()
         .find('rule')
         .eq(2)
         .prevAll('rule')
@@ -563,20 +563,20 @@ describe('$', () => {
   })
   describe('#value', () => {
     it('reduces all nodes with a string value', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r { .g { .b {} } }
         .c .m .y .k { }
       `)
-      let value = $()
+      const value = $()
         .find('class')
         .value()
       expect(value).to.deep.equal('rgbcmyk')
     })
     it('reduces all nodes with a string value (interpolation)', () => {
-      let { $ } = getAST(`
+      const { $ } = getAST(`
         .r-#{g}-#{b} { color: $red; }
       `)
-      let value = $()
+      const value = $()
         .find('class')
         .value()
       expect(value).to.deep.equal('r-g-b')
