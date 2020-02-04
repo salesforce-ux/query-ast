@@ -8,16 +8,16 @@ const { parse: createAST } = require('scss-parser/lib')
 
 const createQuery = require('../lib')
 
-let cleanNode = (node) => {
-  let clone = _.pick(_.clone(node), ['type', 'value'])
+const cleanNode = (node) => {
+  const clone = _.pick(_.clone(node), ['type', 'value'])
   clone.value = _.isArray(clone.value)
     ? clone.value.map(cleanNode) : clone.value
   return clone
 }
 
-let getAST = (scss) => {
-  let ast = cleanNode(createAST(scss))
-  let $ = createQuery(ast)
+const getAST = (scss) => {
+  const ast = cleanNode(createAST(scss))
+  const $ = createQuery(ast)
   return { ast, $ }
 }
 
