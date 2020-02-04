@@ -1,6 +1,6 @@
 {
   "name": "query-ast",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A library to traverse/modify an AST",
   "main": "dist/index.js",
   "license": "BSD-3-Clause",
