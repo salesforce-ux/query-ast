@@ -21,7 +21,8 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "invariant": "2.2.4"
+    "invariant": "2.2.4",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
